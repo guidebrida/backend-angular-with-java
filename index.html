@@ -1,23 +1,65 @@
 <!DOCTYPE html>
-<html lang="pt-BR" ng-app="HelloWord">
+<html lang="pt-BR" ng-app="listaTelefonica">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista contatos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+        
+        .jumbotron{
+            width: 400px;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 20px;
+        }
+        .table{
+            margin-top: 20px;
+        }
+        .form-control{
+            margin-bottom: 5px;
+        }
+    </style>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
     <script src="angular-locale_pt-br.js"></script>
     <script src="angular-1.8.2/angular-route.js"></script>
             <script>
-                angular.module("HelloWord", []);
-                angular.module("HelloWord").controller("helloWordCtrl", function($scope){
-                    $scope.message = "Hello world!";
+                angular.module("listaTelefonica", [])
+                angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function ($scope){
+                    $scope.app = "Lista Telefonica";
+                    $scope.contatos = [
+                        {nome: "pedro", telefone: "99998888"},
+                        {nome: "guilherme", telefone: "111111111"},
+                        {nome: "joao", telefone: "12320042"}
+                    ];
+                    $scope.adicionarContato  = function(contato){
+                        $scope.contatos.push(angular.copy(contato));
+                        delete $scope.contato
+                    };
                 });
+
             </script>
 </head>
-<body>
-    <div ng-controller="helloWordCtrl">
-            {{message}}
+<body ng-controller="listaTelefonicaCtrl">
+           <div class="jumbotron">
+               <h3>{{app}}</h3>
+<table class="table table-striped">
+<tr>
+    <th>Nome</th>
+    <th>Telefone</th>
+</tr>
+<tr ng-repeat="contato in contatos">
+    <td>{{contato.nome}}</td>
+    <td>{{contato.telefone}}</td>
+</tr>
+</table>
+<input class="form-control" type="text" ng-model="contato.nome" placeholder="Nome">
+<input class="form-control" type="text" ng-model="contato.telefone" placeholder="telefone">
+<button  class="btn btn-primary btn-block" ng-click="adicionarContato(contato)">Adicionar Contatos</button>
+
     </div>
 </body>
 </html>
