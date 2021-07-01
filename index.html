@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR" ng-app="HelloWord">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista contatos</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="angular-locale_pt-br.js"></script>
+    <script src="angular-1.8.2/angular-route.js"></script>
+            <script>
+                angular.module("HelloWord", []);
+                angular.module("HelloWord").controller("helloWordCtrl", function($scope){
+                    $scope.message = "Hello world!";
+                });
+            </script>
+</head>
+<body>
+    <div ng-controller="helloWordCtrl">
+            {{message}}
+    </div>
+</body>
+</html>
