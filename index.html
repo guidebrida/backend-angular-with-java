@@ -22,6 +22,12 @@
         .form-control{
             margin-bottom: 5px;
         }
+        .selecionado{
+            background-color: yellow;
+        }
+        .negrito{
+            font-weight: bold;
+        }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
     <script src="angular-locale_pt-br.js"></script>
@@ -32,9 +38,9 @@
                     $scope.app = "Lista Telefonica";
         
                    $scope.contatos = [
-				{nome: "Pedro", telefone: "99998888", cor: "blue"},
-				{nome: "Ana", telefone: "99998877", cor: "yellow"},
-				{nome: "Maria", telefone: "99998866", cor: "red"}
+				{nome: "Pedro", telefone: "99998888"},
+				{nome: "Ana", telefone: "99998877"},
+				{nome: "Maria", telefone: "99998866"}
 			];
 			$scope.operadoras = [
 				{nome: "Oi", codigo: 14, categoria: "Celular"},
@@ -47,6 +53,16 @@
 				$scope.contatos.push(angular.copy(contato));
 				delete $scope.contato;
 			};
+            $scope.apagarContatos = function(contatos){
+                $scope.contatos = contatos.filter(function (contato){
+                    if(!contato.selecionado) return contato;
+                });
+            }
+            $scope.isContatoSelecionado = function (contatos){
+                return contatos.some(function(contato){
+                    return contato.selecionado; 
+                    });
+            };
                 });
                 
 
@@ -68,14 +84,15 @@
                     <td>{{contato.nome}}</td>
                     <td>{{contato.telefone}}</td>
                     <td>{{contato.operadora.nome}}</td>
-                    <td><div style="width: 20px; height: 20px;" ng-style="{'background-color': contato.cor}"></div></td>
                 </tr>
             </table>
 <input class="form-control" type="text" ng-model="contato.nome" placeholder="Nome">
 <input class="form-control" type="text" ng-model="contato.telefone" placeholder="telefone">
 <select class="form-control" ng-model="contato.operadora" ng-options="operadora.nome group by operadora.categoria for operadora in operadoras">
     <option value="">Selecione uma operadora</option>
-</select><button  class="btn btn-primary btn-block" ng-click="adicionarContato(contato)" ng-disabled="!contato.nome || !contato.telefone">Adicionar Contatos</button>
+</select>
+<button  class="btn btn-primary btn-block" ng-click="adicionarContato(contato)" ng-disabled="!contato.nome || !contato.telefone">Adicionar Contatos</button>
+<button  class="btn btn-danger btn-block" ng-click="apagarContatos(contatos)" ng-disabled=!isContatoSelecionado(contatos)>Apagar Contatos</button>
 
     </div>
 </body>
