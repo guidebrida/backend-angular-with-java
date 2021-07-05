@@ -1,9 +1,14 @@
-package teste.angular.domain.enums;
+package teste.angular.domain;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
+import teste.angular.domain.enums.Operadoras;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 public class Contatos implements Serializable {
@@ -13,7 +18,9 @@ public class Contatos implements Serializable {
     private Integer id;
     private String nome;
     private String numero;
-    @Enumerated(value = EnumType.STRING)
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "operadoras_id")
     private Operadoras operadoras;
     private LocalDateTime localDateTime = LocalDateTime.now();
 
@@ -21,10 +28,18 @@ public class Contatos implements Serializable {
     public Contatos() {
     }
 
-    public Contatos( String nome, String numero, Integer operadoras) {
+    public Contatos(Integer id, String nome, String numero) {
+        this.id = id;
         this.nome = nome;
         this.numero = numero;
-        this.operadoras = Operadoras.toEnum(operadoras);
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -47,8 +62,8 @@ public class Contatos implements Serializable {
         return operadoras;
     }
 
-    public void setOperadora(Integer operadora) {
-        this.operadoras = Operadoras.toEnum(operadora);
+    public void setOperadoras(Operadoras operadoras) {
+        this.operadoras = operadoras;
     }
 
     public LocalDateTime getLocalDateTime() {
@@ -57,5 +72,18 @@ public class Contatos implements Serializable {
 
     public void setLocalDateTime(LocalDateTime localDateTime) {
         this.localDateTime = localDateTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Contatos contatos = (Contatos) o;
+        return Objects.equals(id, contatos.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

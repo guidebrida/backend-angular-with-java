@@ -1,33 +1,35 @@
 package teste.angular.service;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import teste.angular.domain.Contatos;
-import teste.angular.repositories.ContatosRepository;
+import teste.angular.repositories.OperadorasRepository;
 import teste.angular.service.exception.ObjectNotFoundException;
 
 import java.util.List;
 
 @Service
-public class ContatosService {
+public class OperadorasService {
 
     @Autowired
-    private ContatosRepository contatosRepository;
+    OperadorasRepository operadorasRepository;
 
     public List<Contatos> findAll(){
-        return contatosRepository.findAll();
+        return operadorasRepository.findAll();
     }
 
     public Contatos findOne(Integer id){
-        return contatosRepository.findById(id).orElseThrow(()-> new ObjectNotFoundException("Não encontrado"));
+        return operadorasRepository.findById(id).orElseThrow(()-> new ObjectNotFoundException("Não encontrado"));
     }
 
     public Contatos insert(Contatos obj){
-        return contatosRepository.save(obj);
+        return operadorasRepository.save(obj);
     }
 
     public void delete(Integer id){
-        contatosRepository.deleteById(id);
+        operadorasRepository.deleteById(id);
     }
 
+}
 }
